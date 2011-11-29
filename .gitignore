@@ -1,3 +1,4 @@
 cog
 *.sqlite3
 *.o
+tags

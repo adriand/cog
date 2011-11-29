@@ -27,21 +27,26 @@ int main()
     choice = get_choice("(n)ew person, (g)et person, (l)ist people, new (p)lace, l(i)st places");
     switch(choice)
     {
+      case 'f':
+        choose_find();
+        break;
+      case 'p':
+        choose_list_people();
+        break;
+      case 'l':
+        choose_list_places();
+        break;
+      /*
       case 'n':
         choose_new_person();
         break;
       case 'g':
         choose_get_person();
         break;
-      case 'l':
-        choose_list_people();
-        break;
       case 'p':
         choose_new_place();
         break;
-      case 'i':
-        choose_list_places();
-        break;
+      */
       case 'q':
         printf("Quitting cog...\n");
         break;
@@ -51,6 +56,11 @@ int main()
     }
   } while (choice != 'q');
   sqlite3_close(db);
+}
+
+void choose_find()
+{
+  printf("Find people, places, strange and unknown entities: ");
 }
 
 void choose_new_person()

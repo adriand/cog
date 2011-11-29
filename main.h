@@ -1,4 +1,5 @@
 int get_choice(char *);
+void choose_find();
 void choose_new_person();
 void choose_get_person();
 void choose_list_people();

@@ -32,6 +32,46 @@ When you hit p for people, you would be brought to a list where you could select
 selected one, you'd be able to work with that person specifically.  The general gist of this would be the
 standard index, show, new, edit, delete functionality, as in web apps.
 
+I need to come up with a better overall pattern for this.  Let's imagine this working like an IOS app.  From the
+main menu (tabs), you would select People.  At this point you would be presented with a List of people.  You would
+also have the ability to Find people, and the ability to create a New person.
+
+From the List (or via Find, which just displays a narrowed list), you would be able to select a single person,
+who would then be Shown.  From Showing the person, you would be able to Edit the person, Delete the person, and
+Associate the person with a place.
+
+To relate this back to this program, this is the structure:
+
+  Main Menu - People, Places
+    People
+      List (offers select by ID)
+        Show (via select by ID)
+          Edit
+          Delete
+          Associate
+      Find -> List, but narrower
+      New
+
+This brings up the need for some kind of architecture.  MVC is overkill for this, since there is little in the way
+of "views".  Instead, I will call my architecture the "interaction / entity" architecture.  Interactions handle
+displaying menus, retrieving user input, and taking action based on interaction with the user (they are thus like
+a combination of views and controllers).
+
+Entities are the individual thing (e.g. a person) and collections of those things (e.g. people). 
+
+I'm going to proceed by setting up folders that handle this distinction.  The structure should be:
+
+  /
+    interactions
+      home
+      people
+      places
+    entities
+      person
+      place
+
+
+
 Iteration 3:
 * delete a person
 * delete a place

@@ -20,18 +20,18 @@ int main()
     exit(1);
   }
 
-  printf("Welcome to cog.");
   /* some help for this menu provided by http://cboard.cprogramming.com/c-programming/64154-how-make-menu-c-dos.html */
   do
   {
-    choice = get_choice("(n)ew person, (g)et person, (l)ist people, new (p)lace, l(i)st places");
+    printf("cog\n---\n");
+    choice = get_choice("(f)ind, (p)eople, p(l)aces", 1);
     switch(choice)
     {
       case 'f':
         choose_find();
         break;
       case 'p':
-        choose_list_people();
+        choose_people();
         break;
       case 'l':
         choose_list_places();
@@ -56,6 +56,45 @@ int main()
     }
   } while (choice != 'q');
   sqlite3_close(db);
+}
+
+/************************************************************************************
+ * VIEWS
+ * (bit of a stretch, but hey, it's a useful pattern)
+ ***********************************************************************************/
+
+void choose_people()
+{
+  int choice;
+
+  printf("People\n------\n\n");
+  choose_list_people();
+  do
+  {
+    choice = get_choice("(n)ew, (g)et, return (h)ome", 0);
+    switch(choice)
+    {
+      case 'n':
+        choose_new_person();
+        break;
+      case 'g':
+        choose_get_person();
+        break;
+      case 'q':
+        printf("Quitting cog...\n");
+        break;
+      case 'h':
+        break;
+      default:
+        printf("Invalid choice.\n");
+        break;
+    }
+  } while (choice != 'h');
+}
+
+void choose_places()
+{
+
 }
 
 void choose_find()
@@ -83,6 +122,7 @@ void choose_get_person()
   int result_count;
   struct person *selection;
   struct person results[MAX_SEARCH_RESULTS];
+  /* printf("Enter the person's ID or part of the person's name: "); */
   printf("Enter part of the person's name: ");
 
   fgets(query, MAXNAME, stdin);
@@ -111,7 +151,7 @@ void work_with_person(struct person *individual)
   char choice;
   printf("Selected ");
   print_person(individual);
-  printf("\n(e}dit %s, (d)elete %s, Enter to cancel: ", individual->name, individual->name);
+  printf("\n(e)dit %s, (d)elete %s, (a)ssociate %s with place, Enter to cancel: ", individual->name, individual->name, individual->name);
   choice = get_one_letter_response_on_a_line();
   switch (choice) {
     case 'e':
@@ -123,9 +163,24 @@ void work_with_person(struct person *individual)
       else
         printf("\nFailed to delete %s.", individual->name);
       break;
+    case 'a':
+      associate_person_with_place(individual);
+      break;
     default:
       break;
   }
+}
+
+/* now I'm not sure if I should go down this route... */
+void associate_person_with_place(struct person *individual)
+{
+  char choice;
+
+  choose_list_places();
+  printf("\nEnter the ID of a place to associate %s with, Enter to cancel: ", individual->name);
+  choice = get_one_letter_response_on_a_line();
+  
+
 }
 
 /* choose_from_list_of_people: given an array of people and the number of people to be concerned with,
@@ -160,7 +215,6 @@ struct person *choose_from_list_of_people(struct person *results, int result_cou
 
 void choose_list_people()
 {
-  printf("Listing everyone:\n\n");
   /* TODO: make this accept a list of everyone and do the printing here.  In fact, that's really the
    * best organization overall - separate the views from the database access layer!
    */
@@ -186,10 +240,14 @@ void choose_list_places()
 }
 
 /* get_choice: displays a menu and choices, returns an integer representing the choice */
-int get_choice(char *choices)
+int get_choice(char *choices, int show_quit)
 {
   char choice;
-  printf("\n%s, (q)uit:\n", choices);
+  if (show_quit) {
+    printf("\n%s, (q)uit:\n", choices);
+  } else {
+    printf("\n%s:\n", choices);
+  }
   choice = get_one_letter_response_on_a_line();
   return choice;
 }

@@ -70,7 +70,7 @@ I'm going to proceed by setting up folders that handle this distinction.  The st
       person
       place
 
-
+Additionally, I probably need a lib folder for stuff like dbfunctions, helper functions for menus, etc.
 
 Iteration 3:
 * delete a person

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sqlite3.h>
-#include "cog.h"
 #include "person.h"
 
 /* make_person: given a name, inserts the person into the database and produces a person 

@@ -1,18 +1,16 @@
+#define MAXNAME         20 /* maximum length of a name */
+#define DATABASE_NAME   "cog.sqlite3"
+#define DB_ERROR        0
+#define DB_SUCCESS      1
+
+#define MAX_SEARCH_RESULTS    10
+
+/* database handle */
+sqlite3 *db;
+/* a good example SQLite program is at http://wang.yuxuan.org/blog/2007/5/22/simple_sqlite_test_c_program_without_callbacks
+ * actually, there are some issues with this that tripped me up.
+ * */
+sqlite3_stmt *stmt;
+
 int get_choice(char *, int);
 void choose_find();
-
-/* people */
-void choose_people();
-void choose_new_person();
-void choose_get_person();
-void choose_list_people();
-void work_with_person(struct person *);
-struct person *choose_from_list_of_people(struct person *, int);
-
-/* places */
-void choose_places();
-void choose_new_place();
-void choose_list_places();
-
-/* misc */
-void chomp(char *);

@@ -1,9 +1,9 @@
-objects = main.o db_functions.o person.o place.o
+objects = main.o db_functions.o helper_functions.o people.o places.o person.o place.o
 
 cog : $(objects)
 	cc -lsqlite3 -o cog $(objects)
 
-main.o : main.c main.h person.h place.h cog.h
+main.o : main.c main.h person.h place.h
 	cc -c -g main.c
 db_functions.o : db_functions.c cog.h
 	cc -c -g db_functions.c
